@@ -1,6 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
-. .git-upload/instructions.ini
+set -ex
+
+source ".git-upload/instructions.ini"
 export text="$instructions"
 
 git add .

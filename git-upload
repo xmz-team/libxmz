@@ -1,5 +1,8 @@
 #!/bin/sh
 
+. .git-upload/instructions.ini
+export text="$instructions"
+
 git add .
 git commit -m "updated by the update script; $text; $(date +'%Y-%m-%d %H:%M')"
 # git pull --rebase

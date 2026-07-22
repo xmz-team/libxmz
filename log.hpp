@@ -20,9 +20,9 @@
 #define XMZ_COLOR_GREEN "\033[0;32m"
 #define XMZ_COLOR_GRAY "\033[0;90m"
 #define XMZ_COLOR_CYAN "\033[0;36m"
-#define XMZ_COLOR_TRBWC "\033[5;37;41m" // White characters on a red background(Twinkle) - Emerg
-#define XMZ_COLOR_RBYC "\033[1;33;41m" // Yellow characters on a red background - Alert
-#define XMZ_COLOR_RBWC "\033[1;37;41m"  // White characters on a red background - Crit
+#define XMZ_COLOR_TRBWC "\033[5;37;41m" // White characters on a red background(Twinkle)
+#define XMZ_COLOR_RBYC "\033[1;33;41m" // Yellow characters on a red background
+#define XMZ_COLOR_RBWC "\033[1;37;41m"  // White characters on a red background
 
 /* log level macros */
 #define _EMERG_ "[Emerg]: "

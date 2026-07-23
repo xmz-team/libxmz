@@ -1,5 +1,5 @@
 # libxmz
-> version: 0.2.8
+> version: 0.2.9beta3
 ## 介绍
 一个功能较简单的c++库
 

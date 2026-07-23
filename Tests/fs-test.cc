@@ -11,19 +11,16 @@ int main() {
     xmz::println("test writefile");
     xmz::fs::touch(filename);
     if (xmz::aux::is_file(filename.c_str()) == 0) {
-        xmz::println("file: ", filename, " created successfully");
+        xmz::println("file:", filename, "created successfully");
     } else {
-        xmz::println("file: ", filename, " created failed");
+        xmz::println("file:", filename, "created failed");
     }
-
     xmz::fs::writefile(writetext, filename);
-
     if (readtext == writetext) {
         xmz::println("write successfully");
     } else {
         xmz::println("write failed");
     }
-
     // xmz::fs::readfile(filename);
     xmz::fs::rmfile(filename);
     if (xmz::aux::is_file(filename.c_str()) == 1) {

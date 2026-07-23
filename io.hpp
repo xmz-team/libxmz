@@ -1,7 +1,21 @@
 /*
  * cmd.hpp
- * Created by XMZ <xmz-team@outlook.com> on 10/7/04
- * Copyright (c) 2025-2026 XMZ <xmz-team@outlook.com> All rights reserved.
+ * Created by XMZ <xmz-team@outlook.com> on 6/7/26
+ * Copyright (c) 2026 XMZ <xmz-team@outlook.com>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3.0 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see
+ * <https://www.gnu.org/licenses/lgpl-3.0.html>.
  */
 
 #ifndef XMZ_TEAM_IO_HPP
@@ -82,6 +96,7 @@ namespace xmz {
         template<typename T, typename... Args>
         inline void print(const T& first, const Args&... rest) {
             print(first);
+            if constexpr (sizeof...(rest) > 0) { __io::write_all(1, " ", 1); }
             print(rest...);
         }
 
@@ -108,6 +123,7 @@ namespace xmz {
         template<typename T, typename... Args>
         inline void perr(const T& first, const Args&... rest) {
             perr(first);
+            if constexpr (sizeof...(rest) > 0) { __io::write_all(2, " ", 1); }
             perr(rest...);
         }
 

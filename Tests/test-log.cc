@@ -4,9 +4,14 @@
 
 int main(int argc, char *argv[]) {
     std::string name = argv[0];
-    xmz::log::info("hello I is ", name.c_str());
-    xmz::log::warn("this is one warn msg");
-    xmz::log::error("this is one error msg");
-    xmz::log::debug("this is one debug msg");
+    xmz::log::info("hello I am", name.c_str());
+    xmz::log::info("this is info msg");
+    xmz::log::warn("this is warn msg");
+    xmz::log::error("this is error msg");
+    xmz::log::debug("this is debug msg");
+    xmz::log::emerg("this is emerg msg");
+    xmz::log::crit("this is crit msg");
+    xmz::log::alert("this is alert msg");
+    xmz::log::notice("this is notice msg");
     return 0;
 }

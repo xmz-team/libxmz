@@ -73,21 +73,21 @@ namespace xmz {
     namespace log {
         inline std::string get_time() { return "[" + _log::get_time_str() + "]:"; }
         template<typename... Args>
-        inline void emerg(const Args&... args) { xmz::perrln(xmz::_log::emerg, get_time, args...); }
+        inline void emerg(const Args&... args) { xmz::perrln(xmz::_log::emerg, get_time(), args...); }
         template<typename... Args>
-        inline void alert(const Args&... args) { xmz::perrln(xmz::_log::alert, get_time, args...); }
+        inline void alert(const Args&... args) { xmz::perrln(xmz::_log::alert, get_time(), args...); }
         template<typename... Args>
-        inline void crit(const Args&... args) { xmz::perrln(xmz::_log::crit, get_time, args...); }
+        inline void crit(const Args&... args) { xmz::perrln(xmz::_log::crit, get_time(), args...); }
         template<typename... Args>
-        inline void error(const Args&... args) { xmz::perrln(xmz::_log::error, get_time, args...); }
+        inline void error(const Args&... args) { xmz::perrln(xmz::_log::error, get_time(), args...); }
         template<typename... Args>
-        inline void warn(const Args&... args) { xmz::perrln(xmz::_log::warn, get_time, args...); }
+        inline void warn(const Args&... args) { xmz::perrln(xmz::_log::warn, get_time(), args...); }
         template<typename... Args>
-        inline void notice(const Args&... args) { xmz::perrln(xmz::_log::notice, get_time, args...); }
+        inline void notice(const Args&... args) { xmz::perrln(xmz::_log::notice, get_time(), args...); }
         template<typename... Args>
-        inline void info(const Args&... args) { xmz::println(xmz::_log::info, get_time, args...); }
+        inline void info(const Args&... args) { xmz::println(xmz::_log::info, get_time(), args...); }
         template<typename... Args>
-        inline void debug(const Args&... args) { xmz::perrln(xmz::_log::debug, get_time, args...); }
+        inline void debug(const Args&... args) { xmz::perrln(xmz::_log::debug, get_time(), args...); }
         inline constexpr auto err = [](const std::string& msg) {
             error(msg);
         };

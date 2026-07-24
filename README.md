@@ -1,9 +1,9 @@
 # libxmz
 > version: 0.2.9beta3
-## 介绍
-一个功能较简单的c++库
+## Introduce
+a c++ library with simple functions
 
-## 联系
+## Contact
 **email: xmz-team@outlook.com**
 
 ---

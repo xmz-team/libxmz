@@ -27,7 +27,7 @@
 #error "only apple platform and use objc/objc++ code, only then can it be used"
 #endif // __OBJC__ && __APPLE__
 
-namespace xmz {
+namespace xmz::ios {
 #if defined(__OBJC__) && defined(__APPLE__)
     namespace objc::ui {
         // MARK: simple application entrance
@@ -305,5 +305,5 @@ namespace xmz {
 #else
 #error "only apple platform and use objc/objc++ code, only then can it be used"
 #endif // __OBJC__ && __APPLE__
-} // namespace xmz
+} // namespace xmz::ios
 # endif // XMZ_TEAM_IOS_APPLE_OBJC_HPP

@@ -41,10 +41,10 @@ this is not rebuilding the wheel...
 
 #ifndef _PATH_DEFPATH
 // #define _PATH_DEFPATH  "/usr/bin:/bin:/usr/sbin:/sbin" // origin
-#define _PATH_DEFPATH  "/usr/bin:/bin:/usr/sbin:/sbin:/var/jb/usr/bin:/var/jb/bin:/var/jb/sbin:/var/jb/usr/sbin:/var/jb/usr/local/bin:/var/jb/usr/local/sbin:/rootfs/bin:/rootfs/sbin:/rootfs/usr/bin:/rootfs/usr/sbin" // rootless, rootful(or system), roothide
+#define _PATH_DEFPATH  "/usr/bin:/bin:/usr/sbin:/sbin:/var/jb/usr/bin:/var/jb/bin:/var/jb/sbin:/var/jb/usr/sbin:/var/jb/usr/local/bin:/var/jb/usr/local/sbin:/rootfs/bin:/rootfs/sbin:/rootfs/usr/bin:/rootfs/usr/sbin" // rootless, rootful(or system), roothide path
 #endif
 
-extern char **environ;
+inline extern char **environ;
 
 namespace xmz::_exec {
     // Types

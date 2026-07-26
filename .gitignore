@@ -17,3 +17,6 @@ induce-code
 *.AllCode.all.md
 Tests/obj/*
 !terminal
+*terminal*
+olds/*
+!Tests/*.*

@@ -1,6 +1,6 @@
 /*
  * fs.hpp
- * Created by XMZ <xmz-team@outlook.com> on 10/7/04
+ * Created by XMZ <xmz-team@outlook.com> on 10/7/26
  * Copyright (c) 2026 XMZ <xmz-team@outlook.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -47,6 +47,15 @@ namespace xmz {
             std::ofstream outfile(file);
             if (!outfile.is_open()) { return false; }
             outfile << text << '\n';
+            return true;
+        }
+        template<typename Container>
+        inline bool writefile(const Container& lines, const std::string& file) {
+            std::ofstream outfile(file);
+            if (!outfile.is_open()) return false;
+            for (const auto& line : lines) {
+                outfile << line << '\n';
+            }
             return true;
         }
         inline bool readfile(const std::string& file) {

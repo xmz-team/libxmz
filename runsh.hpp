@@ -1,6 +1,6 @@
 /*
  * runsh.hpp
- * Created by XMZ <xmz-team@outlook.com> on 10/7/04
+ * Created by XMZ <xmz-team@outlook.com> on 10/7/26
  * Copyright (c) 2026 XMZ <xmz-team@outlook.com>
  *
  * This library is free software; you can redistribute it and/or

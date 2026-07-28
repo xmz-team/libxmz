@@ -30,19 +30,40 @@
 
 namespace xmz {
     namespace _fs {
-        inline void remove(const std::string& name, bool rec = false) {
-            if (rec) {
-                std::filesystem::remove_all(name);
-            } else {
-                std::filesystem::remove(name);
+        inline bool remove(const std::string& name, bool rec = false) {
+            try {
+                if (rec) {
+                    std::filesystem::remove_all(name); 
+                } else {
+                    std::filesystem::remove(name);
+                }
+                return true;
+            } catch (const std::filesystem::filesystem_error&) {
+                return false;
             }
         }
     }
     namespace fs {
         /* I thought about using define directly, but because define is global, even in the namespace, I gave up using define to write */
-        inline void mkdir(const std::string& path) { std::filesystem::create_directories(path); }
-        inline void touch(const std::string& filename) { std::ofstream(filename).close(); }
-        constexpr auto& emptyfile = touch;
+        inline bool mkdir(const std::string& path) {
+            try {
+                std::filesystem::create_directories(path);
+                return true;
+            } catch (const std::filesystem::filesystem_error&) {
+                return false;
+            }
+        }
+        inline bool touch(const std::string& filename) {
+            try {
+                std::ofstream file(filename);
+                if (!file) return false;
+                file.close();
+                return true;
+            } catch (const std::exception&) {
+                return false;
+            }
+        }
+        const auto& emptyfile = touch;
         inline bool writefile(const std::string& text, const std::string& file) {
             std::ofstream outfile(file);
             if (!outfile.is_open()) { return false; }
@@ -74,9 +95,9 @@ namespace xmz {
             buffer << file_path.rdbuf();
             return buffer.str();
         }
-        inline void rmfile(const std::string& filename) { return xmz::_fs::remove(filename); }
-        inline void rmdir(const std::string& dirname) { return xmz::_fs::remove(dirname); }
-        inline void recrmdir(const std::string& dirname) { bool rec = true; return xmz::_fs::remove(dirname, rec); }
+        inline bool rmfile(const std::string& filename) { return xmz::_fs::remove(filename); }
+        inline bool rmdir(const std::string& dirname) { return xmz::_fs::remove(dirname); }
+        inline bool recrmdir(const std::string& dirname) { bool rec = true; return xmz::_fs::remove(dirname, rec); }
     } // namespace fs
 } // namespace xmz
 

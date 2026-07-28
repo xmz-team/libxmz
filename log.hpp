@@ -30,34 +30,34 @@
 namespace xmz {
     namespace _log {
         /* color define */
-        std::string XMZ_COLOR_NC = "\033[0m";
-        std::string XMZ_COLOR_RED  = "\033[0;31m";
-        std::string XMZ_COLOR_YELLOW = "\033[0;33m";
-        std::string XMZ_COLOR_GREEN = "\033[0;32m";
-        std::string XMZ_COLOR_GRAY = "\033[0;90m";
-        std::string XMZ_COLOR_CYAN = "\033[0;36m";
-        std::string XMZ_COLOR_TRBWC = "\033[5;37;41m"; // White characters on a red background(Twinkle)
-       std::string XMZ_COLOR_RBYC = "\033[1;33;41m"; // Yellow characters on a red background
-       std::string XMZ_COLOR_RBWC = "\033[1;37;41m";  // White characters on a red background
+        inline std::string XMZ_COLOR_NC = "\033[0m";
+        inline std::string XMZ_COLOR_RED  = "\033[0;31m";
+        inline std::string XMZ_COLOR_YELLOW = "\033[0;33m";
+        inline std::string XMZ_COLOR_GREEN = "\033[0;32m";
+        inline std::string XMZ_COLOR_GRAY = "\033[0;90m";
+        inline std::string XMZ_COLOR_CYAN = "\033[0;36m";
+        inline std::string XMZ_COLOR_TRBWC = "\033[5;37;41m"; // White characters on a red background(Twinkle)
+       inline std::string XMZ_COLOR_RBYC = "\033[1;33;41m"; // Yellow characters on a red background
+       inline std::string XMZ_COLOR_RBWC = "\033[1;37;41m";  // White characters on a red background
        /* log level macros */
-       std::string  _EMERG_ = "[Emerg]:";
-       std::string  _ALERT_ = "[Alert]:";
-       std::string  _CRIT_ = "[Crit]:";
-       std::string  _ERROR_ = "[Error]:";
-       std::string  _WARN_ = "[Warn]:";
-       std::string  _NOTICE_ = "[Notice]:";
-       std::string  _INFO_ = "[Info]:";
-       std::string  _DEBUG_ = "[Debug]:";
-       std::string  _KEEP_ = "[Keep]:"; // no definition for the time being
+       inline std::string  _EMERG_ = "[Emerg]:";
+       inline std::string  _ALERT_ = "[Alert]:";
+       inline std::string  _CRIT_ = "[Crit]:";
+       inline std::string  _ERROR_ = "[Error]:";
+       inline std::string  _WARN_ = "[Warn]:";
+       inline std::string  _NOTICE_ = "[Notice]:";
+       inline std::string  _INFO_ = "[Info]:";
+       inline std::string  _DEBUG_ = "[Debug]:";
+       inline std::string  _KEEP_ = "[Keep]:"; // no definition for the time being
 
-        std::string emerg = XMZ_COLOR_TRBWC + _EMERG_ + XMZ_COLOR_NC;
-        std::string alert = XMZ_COLOR_RBYC + _ALERT_ + XMZ_COLOR_NC;
-        std::string crit = XMZ_COLOR_RBWC + _CRIT_ + XMZ_COLOR_NC;
-        std::string error = XMZ_COLOR_RED + _ERROR_ + XMZ_COLOR_NC;
-        std::string warn = XMZ_COLOR_YELLOW + _WARN_ + XMZ_COLOR_NC;
-        std::string notice = XMZ_COLOR_CYAN + _NOTICE_ + XMZ_COLOR_NC;
-        std::string info = XMZ_COLOR_GREEN + _INFO_ + XMZ_COLOR_NC;
-        std::string debug = XMZ_COLOR_GRAY + _DEBUG_ + XMZ_COLOR_NC;
+        inline std::string emerg = XMZ_COLOR_TRBWC + _EMERG_ + XMZ_COLOR_NC;
+        inline std::string alert = XMZ_COLOR_RBYC + _ALERT_ + XMZ_COLOR_NC;
+        inline std::string crit = XMZ_COLOR_RBWC + _CRIT_ + XMZ_COLOR_NC;
+        inline std::string error = XMZ_COLOR_RED + _ERROR_ + XMZ_COLOR_NC;
+        inline std::string warn = XMZ_COLOR_YELLOW + _WARN_ + XMZ_COLOR_NC;
+        inline std::string notice = XMZ_COLOR_CYAN + _NOTICE_ + XMZ_COLOR_NC;
+        inline std::string info = XMZ_COLOR_GREEN + _INFO_ + XMZ_COLOR_NC;
+        inline std::string debug = XMZ_COLOR_GRAY + _DEBUG_ + XMZ_COLOR_NC;
 
         inline std::string get_time_str() {
             auto now = std::chrono::system_clock::now();

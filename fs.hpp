@@ -42,7 +42,43 @@ namespace xmz {
                 return false;
             }
         }
-    }
+        namespace cp {
+            enum class copy_type { 
+                file,         // copy file
+                dir,          // copy dir
+                recdir, // rec copy dir
+                link          // copy link
+            };
+
+            inline bool cp(copy_type type,
+                   const std::string& orig_name, 
+                   const std::string& current_name) {
+                try {
+                    switch(type) {
+                        case copy_type::file:
+                            std::filesystem::copy(orig_name, current_name, 
+                            std::filesystem::copy_options::overwrite_existing);
+                            break;
+                        case copy_type::recdir:
+                            std::filesystem::copy(orig_name, current_name, 
+                            std::filesystem::copy_options::recursive | 
+                            std::filesystem::copy_options::overwrite_existing);
+                            break;
+                        case copy_type::dir:
+                            std::filesystem::copy(orig_name, current_name);
+                            break;
+                        case copy_type::link:
+                            std::filesystem::copy(orig_name, current_name, 
+                            std::filesystem::copy_options::copy_symlinks);
+                            break;
+                    }
+                    return true;
+                } catch (const std::filesystem::filesystem_error&) {
+                    return false;
+                }
+            }
+        } /* namespace cp */
+    } /* namespace _fs */
     namespace fs {
         /* I thought about using define directly, but because define is global, even in the namespace, I gave up using define to write */
         inline bool mkdir(const std::string& path) {
@@ -98,6 +134,28 @@ namespace xmz {
         inline bool rmfile(const std::string& filename) { return xmz::_fs::remove(filename); }
         inline bool rmdir(const std::string& dirname) { return xmz::_fs::remove(dirname); }
         inline bool recrmdir(const std::string& dirname) { bool rec = true; return xmz::_fs::remove(dirname, rec); }
+
+        using cptype = _fs::cp::copy_type;
+        inline bool cp(_fs::cp::copy_type type,
+               const std::string& orig_name, 
+               const std::string& current_name) { return _fs::cp::cp(type, orig_name, current_name); }
+        inline std::string pwd() {
+            try {
+                std::filesystem::path currentdir = std::filesystem::current_path();
+                return currentdir;
+            } catch (const std::filesystem::filesystem_error&) {
+                return "";
+            }
+        }
+
+        inline bool cd(const std::string& path) {
+            try {
+                std::filesystem::current_path(path);
+                return true;
+            } catch (const std::filesystem::filesystem_error&) {
+                return false;
+            }
+        }
     } // namespace fs
 } // namespace xmz
 

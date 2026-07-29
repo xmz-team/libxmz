@@ -22,6 +22,7 @@
 #define XMZ_TEAM_LOG_HPP
 
 #include "io.hpp"
+#include "time.hpp"
 #include <chrono>
 #include <iomanip>
 #include <sstream>
@@ -58,20 +59,9 @@ namespace xmz {
         inline std::string notice = XMZ_COLOR_CYAN + _NOTICE_ + XMZ_COLOR_NC;
         inline std::string info = XMZ_COLOR_GREEN + _INFO_ + XMZ_COLOR_NC;
         inline std::string debug = XMZ_COLOR_GRAY + _DEBUG_ + XMZ_COLOR_NC;
-
-        inline std::string get_time_str() {
-            auto now = std::chrono::system_clock::now();
-            auto time_t = std::chrono::system_clock::to_time_t(now);
-            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
-                now.time_since_epoch()) % 1000;
-            std::stringstream ss;
-            ss << std::put_time(std::localtime(&time_t), "%Y-%m-%d %H:%M:%S")
-               << '.' << std::setfill('0') << std::setw(3) << ms.count();
-            return ss.str();
-        }
     } // namespace _log
     namespace log {
-        inline std::string get_time() { return "[" + _log::get_time_str() + "]:"; }
+        inline std::string get_time() { return "[" + xmz::get_time_str() + "]:"; }
         template<typename... Args>
         inline void emerg(const Args&... args) { xmz::perrln(xmz::_log::emerg, get_time(), args...); }
         template<typename... Args>

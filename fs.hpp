@@ -27,6 +27,7 @@
 #include <iostream>
 #include <libxmz/io.hpp>
 #include <sstream>
+#include <vector>
 
 namespace xmz {
     namespace _fs {
@@ -78,9 +79,46 @@ namespace xmz {
                 }
             }
         } /* namespace cp */
+
+        inline bool findstr(const std::string& file, const std::string& keyword, bool fm = false) {
+            std::ifstream file_path(file);
+            std::string line;
+            if (!file_path.is_open()) return false;
+            while (std::getline(file_path, line)) {
+                if (fm == false) {
+                    if (line == keyword) { return true; }
+                } else {
+                    if (line.find(keyword) != std::string::npos) { return true; }
+                }
+            }
+            return false;
+        }
+
+        inline bool remove_file_str_or_remove_text_line(const std::string& filename, const std::string& target_or_keyword, bool def = true) {
+            std::ifstream infile(filename);
+            std::vector<std::string> lines;
+            std::string line;
+            std::string content((std::istreambuf_iterator<char>(infile)), std::istreambuf_iterator<char>());
+            infile.close();
+            size_t pos = 0;
+            if (def == true) {
+                while ((pos = content.find(target_or_keyword, pos)) != std::string::npos) { content.erase(pos, target_or_keyword.length()); }
+                 std::ofstream outfile(filename);
+                outfile << content;
+                outfile.close();
+                return true;
+            } else {
+                while (std::getline(infile, line)) { if (line.find(target_or_keyword) == std::string::npos) { lines.push_back(line); } }
+                infile.close();
+                std::ofstream outfile(filename);
+                for (const auto& l : lines) { outfile << l << '\n'; }
+                return true;
+            }
+            return false;
+        }
+
     } /* namespace _fs */
     namespace fs {
-        /* I thought about using define directly, but because define is global, even in the namespace, I gave up using define to write */
         inline bool mkdir(const std::string& path) {
             try {
                 std::filesystem::create_directories(path);
@@ -110,16 +148,20 @@ namespace xmz {
         inline bool writefile(const Container& lines, const std::string& file) {
             std::ofstream outfile(file);
             if (!outfile.is_open()) return false;
-            for (const auto& line : lines) {
-                outfile << line << '\n';
-            }
+            for (const auto& line : lines) { outfile << line << '\n'; }
+            return true;
+        }
+        inline bool writefile(std::initializer_list<std::string> lines, const std::string& file) {
+            std::ofstream outfile(file);
+            if (!outfile.is_open()) return false;
+            for (const auto& line : lines) { outfile << line << '\n'; }
             return true;
         }
         inline bool readfile(const std::string& file) {
             std::ifstream file_path(file);
             std::string line;
             if (!file_path.is_open()) { return false; }
-            while (std::getline(file_path, line)) { xmz::print(line); }
+            while (std::getline(file_path, line)) { xmz::println(line); }
             file_path.close();
             return true;
         }
@@ -131,6 +173,7 @@ namespace xmz {
             buffer << file_path.rdbuf();
             return buffer.str();
         }
+
         inline bool rmfile(const std::string& filename) { return xmz::_fs::remove(filename); }
         inline bool rmdir(const std::string& dirname) { return xmz::_fs::remove(dirname); }
         inline bool recrmdir(const std::string& dirname) { bool rec = true; return xmz::_fs::remove(dirname, rec); }
@@ -156,6 +199,13 @@ namespace xmz {
                 return false;
             }
         }
+
+        inline bool findstr(const std::string& file, const std::string& keyword) { return _fs::findstr(file, keyword, false); }
+        inline bool fmfindstr(const std::string& file, const std::string& keyword) { return _fs::findstr(file, keyword, true); }
+
+        inline bool rmfilestr(const std::string& filename, const std::string& target) { return _fs::remove_file_str_or_remove_text_line(filename, target, true); }
+        inline bool rmtextline(const std::string& filename, const std::string& keyword) { return _fs::remove_file_str_or_remove_text_line(filename, keyword, false); }
+
     } // namespace fs
 } // namespace xmz
 

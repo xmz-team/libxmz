@@ -22,6 +22,7 @@
 
 #ifndef XMZ_TEAM_IOS_UI_HPP
 #define XMZ_TEAM_IOS_UI_HPP
+#warning "'apple-ios-ui.hpp' is deprecated: please use apple-ios-objc.hpp instead"
 #if defined(__OBJC__) && defined(__APPLE__)
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -32,7 +33,6 @@
 namespace xmz {
   # if defined(__OBJC__) && defined(__APPLE__)
     namespace ui {
-    // namespace ui {
         // MARK: 简单的应用程序入口
         inline int run(int argc, char* argv[], id delegate = nil) {
             @autoreleasepool {

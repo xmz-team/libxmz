@@ -116,7 +116,54 @@ namespace xmz {
             }
             return false;
         }
+        inline bool mklink(const std::string& target, const std::string& link_name, bool def = true) {
+            try {
+                if (def == true) {
+                    std::filesystem::create_symlink(target, link_name);
+                } else {
+                    std::filesystem::create_directory_symlink(target, link_name);
+                }
+                return true;
+            } catch (const std::filesystem::filesystem_error& e) {
+                    return false;
+            }
+        }
 
+        namespace findtext {
+            struct findresult {
+                bool found = false;
+                int line_number = 0;
+                std::string line_content;
+                int word_count = 0;
+                findresult() = default;
+                findresult(const std::string& file, const std::string& keyword, bool fm) { *this = xmz::_fs::findtext::findresult(file, keyword, fm); }
+            };
+
+            inline findresult findtext(const std::string& file, const std::string& keyword, bool fm = false) {
+                std::ifstream file_path(file);
+                std::string line;
+                findresult result;
+                if (!file_path.is_open()) return result;
+                while (std::getline(file_path, line)) {
+                    result.line_number++;
+                    bool match = false;
+                    if (!fm) { match = (line == keyword); } else { match = (line.find(keyword) != std::string::npos); }
+                    if (match) {
+                        result.found = true;
+                        result.line_content = line;
+                        result.word_count = 0;
+                        std::istringstream iss(line);
+                        std::string word;
+                        while (iss >> word) { result.word_count++; }
+                        return result;
+                    }
+                }
+                result.found = false;
+                result.line_content = "";
+                result.word_count = 0;
+                return result;
+            }
+        } /* namespace findtext */
     } /* namespace _fs */
     namespace fs {
         inline bool mkdir(const std::string& path) {
@@ -205,6 +252,12 @@ namespace xmz {
 
         inline bool rmfilestr(const std::string& filename, const std::string& target) { return _fs::remove_file_str_or_remove_text_line(filename, target, true); }
         inline bool rmtextline(const std::string& filename, const std::string& keyword) { return _fs::remove_file_str_or_remove_text_line(filename, keyword, false); }
+
+        inline bool mklnfile(const std::string& target, const std::string& link_name) { return _fs::mklink(target, link_name, true); }
+        inline bool mklndir(const std::string& target, const std::string& link_name) { return _fs::mklink(target, link_name, false); }
+
+        inline _fs::findtext::findresult fmfindresult(const std::string& file, const std::string& keyword) { return _fs::findtext::findresult(file, keyword, false); }
+        inline _fs::findtext::findresult findresult(const std::string& file, const std::string& keyword) { return _fs::findtext::findresult(file, keyword, true); }
 
     } // namespace fs
 } // namespace xmz

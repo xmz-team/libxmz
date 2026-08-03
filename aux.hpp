@@ -59,16 +59,29 @@ namespace xmz {
             return (S_ISREG(st.st_mode) ? 0 : 1);  // 0 if is file, 1 if not
         }
 
-        constexpr auto& path_exist = exist;
+        template<typename T>
+        inline int exist(const T& path) { return exist(path.c_str()); }
+        template<typename T>
+        inline int is_dir(const T& path) { return is_dir(path.c_str()); }
+        template<typename T>
+        inline int is_file(const T& path) { return is_file(path.c_str()); }
+        template<typename T>
+        inline int path_exist(const T& path) { return exist(path); }
+
+        //constexpr auto& path_exist = exist;
 
         inline std::string resolve_path(const std::string& path) {
             char resolved_path[PATH_MAX];
             if (realpath(path.c_str(), resolved_path) != nullptr) {
                 return std::string(resolved_path);
             }
-            return path;  // Parsing fails to return to the original path
+            return path;
         }
-        constexpr auto& parselink = resolve_path;
+
+        inline std::string resolve_path(const char* path) { return resolve_path(std::string(path)); }
+
+        template<typename T>
+        inline std::string parselink(const T& path) { return resolve_path(path); }
     } /* namespace aux */
     namespace auxiliary = aux;
 } /* namespace xmz */

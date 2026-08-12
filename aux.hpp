@@ -42,6 +42,8 @@ namespace xmz {
     // return 0, it exists
     // return 1, it doesn't exist
     namespace aux {
+        inline long long get_file_size(const std::string& path) { try { return std::filesystem::file_size(path); } catch (const std::filesystem::filesystem_error& e) { return -1; } }
+
         inline int exist(const char *path) {
             struct stat st;
             return (stat(path, &st) != 0); /* 0 if exists, 1 if not exists */

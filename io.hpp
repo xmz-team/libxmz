@@ -79,20 +79,25 @@ namespace xmz {
             }
         } // namespace __io
 
+        /**
+          @explain:
+            deal with numerical types
+            deal with boolean values
+            ...
+            variable parameter template
+         */
+
         inline void print(const std::string& value) { __io::write_string(1, value); }
         inline void print(const char* value) { if (value) __io::write_cstr(1, value); }
         template<size_t N>
         inline void print(const char (&value)[N]) { __io::write_cstr(1, value); }
         inline void print(char* value) { if (value) __io::write_cstr(1, value); }
-        // 处理布尔值
         inline void print(bool value) { __io::write_cstr(1, value ? "true" : "false"); }
-        // 处理数值类型
         template<typename T>
         inline std::enable_if_t<std::is_arithmetic_v<T> && !std::is_same_v<T, bool>>
         print(const T& value) {
             __io::write_string(1, std::to_string(value));
         }
-        // 变参模板
         template<typename T, typename... Args>
         inline void print(const T& first, const Args&... rest) {
             print(first);
@@ -111,15 +116,12 @@ namespace xmz {
         template<size_t N>
         inline void perr(const char (&value)[N]) { __io::write_cstr(2, value); }
         inline void perr(char* value) { if (value) __io::write_cstr(2, value); }
-        // 处理布尔值
         inline void perr(bool value) { __io::write_cstr(2, value ? "true" : "false"); }
-        // 处理数值类型
         template<typename T>
         inline std::enable_if_t<std::is_arithmetic_v<T> && !std::is_same_v<T, bool>>
         perr(const T& value) {
             __io::write_string(2, std::to_string(value));
         }
-        // 变参模板
         template<typename T, typename... Args>
         inline void perr(const T& first, const Args&... rest) {
             perr(first);
@@ -129,7 +131,7 @@ namespace xmz {
 
         template<typename... Args>
         inline void perrln(const Args&... args) {
-            print(args...);
+            perr(args...);
             __io::write_all(2, "\n", 1);
         }
 
@@ -164,14 +166,12 @@ namespace xmz {
             return (ret2 < 0) ? ret2 : ret + ret2;
         }
     } // namespace io
-
     using io::print;
     using io::println;
     using io::perr;
     using io::perrln;
     using io::fprint;
     using io::fprintln;
-    inline auto echo = [](const auto& text) { println(text); };
 } // namespace xmz
 
 #endif // XMZ_TEAM_IO_HPP

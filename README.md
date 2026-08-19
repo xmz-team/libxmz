@@ -1,5 +1,5 @@
 # libxmz
-> version: 0.3.4
+> version: 0.3.5
 
 ## Introduce
 a c++ library with simple functions  

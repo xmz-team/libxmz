@@ -259,6 +259,14 @@ namespace xmz {
         inline _fs::findtext::findresult fmfindresult(const std::string& file, const std::string& keyword) { return _fs::findtext::findresult(file, keyword, false); }
         inline _fs::findtext::findresult findresult(const std::string& file, const std::string& keyword) { return _fs::findtext::findresult(file, keyword, true); }
 
+        inline bool rename(const std::string& orig_name, const std::string& new_name) {
+            try {
+                std::filesystem::rename(orig_name, new_name);
+                return true;
+            } catch (const std::filesystem::filesystem_error& e) {
+                return false;
+            }
+        }
     } // namespace fs
 } // namespace xmz
 

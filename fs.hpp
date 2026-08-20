@@ -184,7 +184,7 @@ namespace xmz {
                 return false;
             }
         }
-        const auto& emptyfile = touch;
+        inline const auto& emptyfile = touch;
         inline bool writefile(const std::string& text, const std::string& file) {
             std::ofstream outfile(file);
             if (!outfile.is_open()) { return false; }
@@ -204,6 +204,7 @@ namespace xmz {
             for (const auto& line : lines) { outfile << line << '\n'; }
             return true;
         }
+        inline bool writefile(const char* text, const std::string& file) { return writefile(std::string(text), file); }
         inline bool readfile(const std::string& file) {
             std::ifstream file_path(file);
             std::string line;

@@ -123,7 +123,7 @@ namespace xmz::ios {
         }
         inline constexpr auto& stackview = stackView;
     } // namespace objc::make
-    namespace objc::mk = objc::make;
+    namespace objc { namespace mk = make; }
     // MARK: automatic layout assistance
     namespace objc::layout {
         inline void center(UIView* view, UIView* inView) {
@@ -281,7 +281,7 @@ namespace xmz::ios {
         }
         inline UIImage* named(NSString* name) { return [UIImage imageNamed:name]; }
     } // namespace objc::image
-    namespace objc::img = objc::image;
+    namespace objc { namespace img = image; }
     // MARK: color auxiliary
     namespace objc::color {
         inline UIColor* white() { return UIColor.whiteColor; }

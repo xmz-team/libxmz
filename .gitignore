@@ -19,4 +19,5 @@ Tests/obj/*
 !terminal
 *terminal*
 olds/*
-!Tests/*.*
+Tests/induce-code
+Tests/libxmz.Tests.AllCode.all.md

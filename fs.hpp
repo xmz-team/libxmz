@@ -47,7 +47,7 @@ namespace xmz {
             enum class copy_type { 
                 file,         // copy file
                 dir,          // copy dir
-                recdir, // rec copy dir
+                recdir,       // rec copy dir
                 link          // copy link
             };
 
@@ -204,7 +204,7 @@ namespace xmz {
             for (const auto& line : lines) { outfile << line << '\n'; }
             return true;
         }
-        inline bool writefile(const char* text, const std::string& file) { return writefile(std::string(text), file); }
+        inline bool writefile(const char *lines, const std::string& file) { return writefile(std::string(lines), file); }
         inline bool readfile(const std::string& file) {
             std::ifstream file_path(file);
             std::string line;
@@ -267,6 +267,13 @@ namespace xmz {
             } catch (const std::filesystem::filesystem_error& e) {
                 return false;
             }
+        }
+
+        inline bool append(const std::string& text, const std::string& file) {
+            std::ofstream outfile(file, std::ios::app);
+            if (!outfile.is_open()) return false;
+            outfile << text << '\n';
+            return true;
         }
     } // namespace fs
 } // namespace xmz

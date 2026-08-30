@@ -1,4 +1,4 @@
-#include "runsh.hpp"
+#include <libxmz/runsh.hpp>
 
 int main() {
     xmz::cmd::runsh("echo 'hello'");

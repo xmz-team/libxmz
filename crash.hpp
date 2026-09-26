@@ -83,5 +83,6 @@ void init_crash_handler(const char *log_path = nullptr) {
     signal(SIGILL,  sig_handler);
     signal(SIGBUS,  sig_handler);
 }
+void init_crash_handler(const std::string& log_path) { return init_crash_handler(log_path.c_str()); }
 } /* namespace xmz::crash */
 #endif /* XMZ_TEAM_CRASH_HPP */

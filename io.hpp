@@ -319,22 +319,22 @@ namespace xmz {
         };
 #if !_XMZ_HAS_STD_FORMAT
         template<typename T>
-        std::string format_fallback(const T& value) {
+        inline std::string format_fallback(const T& value) {
             std::ostringstream oss;
             oss << value;
             return oss.str();
         }
         template<>
-        std::string format_fallback<std::string>(const std::string& value) {
+        inline std::string format_fallback<std::string>(const std::string& value) {
             return value;
         }
         template<>
-        std::string format_fallback<const char*>(const char* const& value) {
+        inline std::string format_fallback<const char*>(const char* const& value) {
             return value ? std::string(value) : "(null)";
         }
 #endif
         template<typename T>
-        std::string format_value(const T& value) {
+        inline std::string format_value(const T& value) {
             if constexpr (std::is_same_v<T, char>) {
                 return std::string(1, value);
             } else if constexpr (std::is_same_v<T, const char*>) {

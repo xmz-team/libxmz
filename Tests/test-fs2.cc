@@ -13,9 +13,17 @@ int main() {
     );
     xmz::log::info("orig");
     xmz::fs::readfile("test.txt");
-    if (xmz::fs::rmfilestr("test.txt", "1234")) { xmz::log::info("remove 1234 success"); } else { xmz::log::error("remove 1234 failed"); }
+    if (xmz::fs::rmfilestr("test.txt", "1234")) {
+        xmz::log::info("remove 1234 success");
+    } else {
+        xmz::log::error("remove 1234 failed");
+    }
     xmz::log::info("now");
     xmz::fs::readfile("test.txt");
-    if (xmz::fs::rmfile("test.txt") { xmz::log::info("remove file: test.txt success"); } else { xmz::log::error("remove file: test.txt failed"); }
+    if (xmz::fs::rmfile("test.txt")) {
+        xmz::log::info("remove file: test.txt success");
+    } else {
+        xmz::log::error("remove file: test.txt failed");
+    }
     return 0;
 }

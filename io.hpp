@@ -231,41 +231,39 @@ namespace xmz {
             }
 
             bool flush_internal(int timeout_ms) {
-    std::array<char, RING_BUFFER_SIZE> temp_buffer;
-            int retry_count = 0;
-            auto start_time = std::chrono::steady_clock::now();
-            while (!buffer.empty()) {
-                if (timeout_ms >= 0) {
-                    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
-                        std::chrono::steady_clock::now() - start_time).count();
-                    if (elapsed >= timeout_ms) return false;
-                }
-                size_t count = buffer.peek(temp_buffer.data(), temp_buffer.size());
-                if (count == 0) break;
-                ssize_t written = ::write(fd, temp_buffer.data(), count);
-                if (written < 0) {
-                    if (errno == EINTR) continue;
-                    if (errno == EAGAIN || errno == EWOULDBLOCK) {
-                        int remaining_timeout = timeout_ms >= 0 ? 
-                            timeout_ms - std::chrono::duration_cast<std::chrono::milliseconds>(
-                                std::chrono::steady_clock::now() - start_time).count() : -1;
-                        if (remaining_timeout < 0 && timeout_ms >= 0) return false;
-                        if (!wait_for_write(remaining_timeout >= 0 ? remaining_timeout : 100)) {
-                            retry_count++;
-                            if (retry_count >= MAX_FLUSH_RETRIES && timeout_ms >= 0) return false;
+                std::array<char, RING_BUFFER_SIZE> temp_buffer;
+                int retry_count = 0;
+                auto start_time = std::chrono::steady_clock::now();
+                while (!buffer.empty()) {
+                    if (timeout_ms >= 0) {
+                        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count();
+                        if (elapsed >= timeout_ms) return false;
+                    }
+                    size_t count = buffer.peek(temp_buffer.data(), temp_buffer.size());
+                    if (count == 0) break;
+                    ssize_t written = ::write(fd, temp_buffer.data(), count);
+                    if (written < 0) {
+                        if (errno == EINTR) continue;
+                        if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                            int remaining_timeout = timeout_ms >= 0 ? 
+                                timeout_ms - std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count() : -1;
+                            if (remaining_timeout < 0 && timeout_ms >= 0) return false;
+                            if (!wait_for_write(remaining_timeout >= 0 ? remaining_timeout : 100)) {
+                                retry_count++;
+                                if (retry_count >= MAX_FLUSH_RETRIES && timeout_ms >= 0) return false;
+                                continue;
+                            }
+                            retry_count = 0;
                             continue;
                         }
+                        throw io_error("Failed to write to file descriptor");
+                    }
+                    if (written > 0) {
+                        size_t popped = buffer.pop_bulk(nullptr, static_cast<size_t>(written));
+                        // char discard[64];
+                        // size_t popped = buffer.pop_bulk(discard, written);
+                    }
                         retry_count = 0;
-                        continue;
-                    }
-                    throw io_error("Failed to write to file descriptor");
-                }
-                if (written > 0) {
-                    size_t popped = buffer.pop_bulk(nullptr, static_cast<size_t>(written));
-                    // char discard[64];
-                    // size_t popped = buffer.pop_bulk(discard, written);
-                    }
-                    retry_count = 0;
                 }
                 return true;
             }

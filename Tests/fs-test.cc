@@ -10,7 +10,7 @@ int main() {
     xmz::println("libxmz fs test");
     xmz::println("test writefile");
     xmz::fs::touch(filename);
-    if (xmz::aux::is_file(filename.c_str()) == 0) {
+    if (xmz::aux::is_file(filename)) {
         xmz::println("file:", filename, "created successfully");
     } else {
         xmz::println("file:", filename, "created failed");
@@ -23,7 +23,7 @@ int main() {
     }
     // xmz::fs::readfile(filename);
     xmz::fs::rmfile(filename);
-    if (xmz::aux::is_file(filename.c_str()) == 1) {
+    if (!xmz::aux::is_file(filename)) {
         xmz::println("remove successfully");
     } else {
         xmz::println("remove failed");

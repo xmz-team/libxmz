@@ -19,17 +19,11 @@ std::string mydata = jb + "/opt/libxmz/testapp-a/data";
 
 @implementation apprun
 - (BOOL)test {
-    if (xmz::aux::is_dir(mydata) == 1) {
-        xmz::fs::mkdir(mydata);
-    }
+    if (!xmz::aux::is_dir(mydata)) xmz::fs::mkdir(mydata);
     // test write text
-    if (xmz::fs::writefile(
-        {
-            "name: testapp-a",
-            "bundle: io.github.xmz-team.libxmz.testapp-a",
-            "version: 0.0.1"
-        }, mydata + "Info.ini"
-        )) {
+    if (xmz::fs::writefile({"name: testapp-a",
+                            "bundle: io.github.xmz-team.libxmz.testapp-a",
+                            "version: 0.0.1"}, mydata + "Info.ini")) {
         xmz::log::debug("write successfully!");
         return YES;
     } else {

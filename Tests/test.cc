@@ -2,7 +2,6 @@
 
 int main()
 {
-    //xmz::flush();
     xmz::println("hello, this println");
     xmz::fprintln(1, "hello, this fprintln out");
     xmz::fprintln(2, "hello, this fprintln err");

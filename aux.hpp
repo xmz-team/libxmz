@@ -38,27 +38,24 @@
 #include <sys/wait.h>
 
 namespace xmz {
-    // aux::exist and is_dir and is_file
-    // return 0, it exists
-    // return 1, it doesn't exist
     namespace aux {
         inline long long get_file_size(const std::string& path) { try { return std::filesystem::file_size(path); } catch (const std::filesystem::filesystem_error& e) { return -1; } }
 
-        inline int exist(const char *path) {
+        inline bool exist(const char *path) {
             struct stat st;
-            return (stat(path, &st) != 0); /* 0 if exists, 1 if not exists */
+            return stat(path, &st) == 0;
         }
 
-        inline int is_dir(const char *path) {
+        inline bool is_dir(const char *path) {
             struct stat st;
-            if (stat(path, &st) != 0) { return 1; /* doesn't exist or error */ }
-            return (S_ISDIR(st.st_mode) ? 0 : 1);  /* 0 if is directory, 1 if not */
+            if (stat(path, &st) != 0) return false;
+            return S_ISDIR(st.st_mode);
         }
 
-        inline int is_file(const char *path) {
+        inline bool is_file(const char *path) {
             struct stat st;
-            if (stat(path, &st) != 0) { return 1; /* doesn't exist or error */ }
-            return (S_ISREG(st.st_mode) ? 0 : 1);  // 0 if is file, 1 if not
+            if (stat(path, &st) != 0) return false;
+            return S_ISREG(st.st_mode);
         }
 
         template<typename T>
@@ -69,8 +66,6 @@ namespace xmz {
         inline int is_file(const T& path) { return is_file(path.c_str()); }
         template<typename T>
         inline int path_exist(const T& path) { return exist(path); }
-
-        //constexpr auto& path_exist = exist;
 
         inline std::string resolve_path(const std::string& path) {
             char resolved_path[PATH_MAX];

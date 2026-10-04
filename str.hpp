@@ -42,6 +42,20 @@ namespace xmz {
             auto end = s.find_last_not_of(" \t\n\r");
             return s.substr(start, end - start + 1);
         }
+        inline std::string join(const std::vector<std::string>& parts, const std::string& delimiter) {
+            if (parts.empty()) return "";
+            size_t total = 0;
+            for (const auto& p : parts) total += p.size();
+            total += delimiter.size() * (parts.size() - 1);
+            std::string result;
+            result.reserve(total);
+            result += parts[0];
+            for (size_t i = 1; i < parts.size(); ++i) {
+                result += delimiter;
+                result += parts[i];
+            }
+            return result;
+        }
     } /* namespace str */
 } /* namespace xmz */
 #endif /* XMZ_TEAM_STR_HPP */

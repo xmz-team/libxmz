@@ -344,7 +344,7 @@ namespace xmz {
             } else if constexpr (std::is_arithmetic_v<T>) {
                 return std::to_string(value);
             } else {
-#if XMZ_HAS_STD_FORMAT
+#if _XMZ_HAS_STD_FORMAT
                 return std::format("{}", value);
 #else
                 return format_fallback(value);

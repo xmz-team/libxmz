@@ -29,6 +29,7 @@
 #include <cstring>
 #include <ctime>
 #include <atomic>
+#include <string>
 
 namespace xmz::crash {
 // globally available log path, empty by default, output to stderr
@@ -36,7 +37,7 @@ static const char *g_crash_log_path = nullptr;
 // prevent signal processing function re-entry or multi-thread simultaneous execution
 static std::atomic_flag g_crash_lock = ATOMIC_FLAG_INIT;
 // general signal processing function
-void sig_handler(int sig) {
+inline void sig_handler(int sig) {
     // If there is already a handler executing, call the default processing directly to avoid deadlock
     if (g_crash_lock.test_and_set(std::memory_order_acquire)) {
         signal(sig, SIG_DFL);
@@ -74,7 +75,7 @@ void sig_handler(int sig) {
     raise(sig);
 }
 // Initialization function, called when the program starts
-void init_crash_handler(const char *log_path = nullptr) {
+inline void init_crash_handler(const char *log_path = nullptr) {
     g_crash_log_path = log_path;
     // register common crash signals
     signal(SIGSEGV, sig_handler);
@@ -83,6 +84,6 @@ void init_crash_handler(const char *log_path = nullptr) {
     signal(SIGILL,  sig_handler);
     signal(SIGBUS,  sig_handler);
 }
-void init_crash_handler(const std::string& log_path) { return init_crash_handler(log_path.c_str()); }
+inline void init_crash_handler(const std::string& log_path) { return init_crash_handler(log_path.c_str()); }
 } /* namespace xmz::crash */
 #endif /* XMZ_TEAM_CRASH_HPP */

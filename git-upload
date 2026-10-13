@@ -1,12 +1,11 @@
-#!/bin/bash
-
-set -ex
+#!/bin/bash -ex
 
 source ".git-upload/instructions.ini"
 export text="$instructions"
 
 git add .
-git commit -m "updated by the update script; $text; $(date +'%Y-%m-%d %H:%M')"
+git diff --staged --quiet || git commit -m "updated by the update script $text $(date +'%Y-%m-%d %H:%M')"
+
 git pull --rebase
 git push origin main
 git push codeberg main

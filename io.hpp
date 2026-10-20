@@ -258,12 +258,8 @@ namespace xmz {
                         }
                         throw io_error("Failed to write to file descriptor");
                     }
-                    if (written > 0) {
-                        size_t popped = buffer.pop_bulk(nullptr, static_cast<size_t>(written));
-                        // char discard[64];
-                        // size_t popped = buffer.pop_bulk(discard, written);
-                    }
-                        retry_count = 0;
+                    if (written > 0) (void)buffer.pop_bulk(nullptr, static_cast<size_t>(written));
+                    retry_count = 0;
                 }
                 return true;
             }

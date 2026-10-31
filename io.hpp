@@ -42,20 +42,25 @@
 #if __cplusplus >= 202002L && __has_include(<format>)
 #    include <format>
 #    ifdef __cpp_lib_format
-#        define _XMZ_HAS_STD_FORMAT 1
+#        define _LIBXMZ_HAS_STD_FORMAT 1
 #    else
-#        define _XMZ_HAS_STD_FORMAT 0
+#        define _LIBXMZ_HAS_STD_FORMAT 0
 #        include <sstream>
 #        include <iomanip>
 #    endif
 #else
-#    define _XMZ_HAS_STD_FORMAT 0
+#    define _LIBXMZ_HAS_STD_FORMAT 0
 #    include <sstream>
 #    include <iomanip>
 #endif
 
 namespace xmz {
     namespace io {
+#ifndef LIBXMZ_IO_NO_AUTO_SPACE
+            inline constexpr bool no_auto_space = false;
+#else
+            inline constexpr bool no_auto_space = true;
+#endif
         class io_error : public std::system_error {
         public:
             explicit io_error(const std::string& message)
@@ -311,7 +316,7 @@ namespace xmz {
             std::mutex mtx;
             std::unordered_map<int, std::shared_ptr<fd_buffer>> buffers;
         };
-#if !_XMZ_HAS_STD_FORMAT
+#if !_LIBXMZ_HAS_STD_FORMAT
         template<typename T>
         inline std::string format_fallback(const T& value) {
             std::ostringstream oss;
@@ -340,7 +345,7 @@ namespace xmz {
             } else if constexpr (std::is_arithmetic_v<T>) {
                 return std::to_string(value);
             } else {
-#if _XMZ_HAS_STD_FORMAT
+#if _LIBXMZ_HAS_STD_FORMAT
                 return std::format("{}", value);
 #else
                 return format_fallback(value);
@@ -389,7 +394,7 @@ namespace xmz {
         template<typename T, typename... Args>
         void print(const T& first, const Args&... rest) {
             print(first);
-            if constexpr (sizeof...(rest) > 0) { write_all(1, " ", 1); }
+            if constexpr (sizeof...(rest) > 0) if constexpr (!no_auto_space) write_all(1, " ", 1);
             print(rest...);
         }
 
@@ -412,7 +417,8 @@ namespace xmz {
         template<typename T, typename... Args>
         void perr(const T& first, const Args&... rest) {
             perr(first);
-            if constexpr (sizeof...(rest) > 0) { write_all(2, " ", 1); }
+            if constexpr (sizeof...(rest) > 0)
+                if constexpr (!no_auto_space) write_all(2, " ", 1);
             perr(rest...);
         }
 

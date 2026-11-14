@@ -8,7 +8,7 @@
 #include <libxmz/aux.hpp>
 #include <libxmz/crash.hpp>
 
-namespace ios { namespace oc = xmz::ios::objc; }
+namespace oc = xmz::ios::objc;
 
 std::string jb = "/var/jb";
 std::string mydata = jb + "/opt/libxmz/testapp-a/data";
@@ -38,5 +38,5 @@ int main(int argc, char *argv[]) {
     apprun *app = [[apprun alloc] init];
     [app test];
     [app release];
-    return ios::oc::ui::run(argc, argv, [apprun class]);
+    return oc::ui::run(argc, argv, [apprun class]);
 }

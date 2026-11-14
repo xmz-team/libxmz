@@ -10,14 +10,7 @@ secrets/
 credentials.json
 *.secret
 .terraform/
-tmp/*
 
-.induce-code
-induce-code
-*.AllCode.all.md
-Tests/obj/*
-!terminal
-*terminal*
-olds/*
-Tests/induce-code
-Tests/libxmz.Tests.AllCode.all.md
+tmp/
+Tests/obj/
+*.[oa]

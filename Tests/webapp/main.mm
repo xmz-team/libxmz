@@ -87,6 +87,9 @@ namespace oc = xmz::ios::objc;
 int main(int argc, char *argv[])
 {
 	xmz::crash::init_crash_handler("/tmp/libxmz-test-wkwebview.crash.log");
-	@autoreleasepool return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+	@autoreleasepool {
+		return UIApplicationMain(argc, argv, nil,
+								 NSStringFromClass([AppDelegate class]));
+	}
 }
 

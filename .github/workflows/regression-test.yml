@@ -75,7 +75,7 @@ jobs:
           for f in Tests/test-a.mm Tests/webapp/main.mm
           do
             echo "== $f =="
-            xcrun --sdk iphone clang++ -std=c++20 \
+            xcrun --sdk iphoneos c++ -std=c++20 \
               -fobjc-arc -ObjC++ -fsyntax-only -isysroot "$SDK" \
               -Ibuild/inc "$f"
           done

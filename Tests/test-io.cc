@@ -2,7 +2,7 @@
 #include <libxmz/log.hpp>
 #include <string>
 
-int main(int argc, char* argv[])
+int main(char* argv[])
 {
     xmz::println("hello I am", argv[0]);
     xmz::log::info("The message output is successful!");

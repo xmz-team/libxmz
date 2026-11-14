@@ -2,8 +2,9 @@
 #include <libxmz/log.hpp>
 #include <string>
 
-int main(char* argv[])
+int main(int argc, char* argv[])
 {
+    (void)argc;
     xmz::println("hello I am", argv[0]);
     xmz::log::info("The message output is successful!");
     xmz::log::info("this is info msg");

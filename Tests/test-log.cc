@@ -2,7 +2,8 @@
 #include <libxmz/log.hpp>
 #include <string>
 
-int main(char *argv[]) {
+int main(int argc, char *argv[]) {
+    (void)argc;
     std::string name = argv[0];
     xmz::log::info("hello I am", name.c_str());
     xmz::log::info("this is info msg");

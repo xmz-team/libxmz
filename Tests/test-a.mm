@@ -1,5 +1,6 @@
 // test-a.mm
-// build: c++ -framework UIKit -framework Foundation test-a.mm -o test-a
+// build: c++ -fobjc-arc -framework UIKit -framework Foundation test-a.mm -o test-a
+#include <string>
 
 #include <libxmz/apple-ios-objc.hpp>
 #include <libxmz/io.hpp>
@@ -37,6 +38,5 @@ int main(int argc, char *argv[]) {
     xmz::crash::init_crash_handler("/var/log/io.github.xmz-team.libxmz.testapp-a.log");
     apprun *app = [[apprun alloc] init];
     [app test];
-    [app release];
     return oc::ui::run(argc, argv, [apprun class]);
 }

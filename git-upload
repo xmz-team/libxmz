@@ -3,7 +3,7 @@
 source ".git-upload/instructions.ini"
 export text="$instructions"
 
-text="${text}$(date +'%Y-%m-%d %H:%M')updated by the update script"
+text="${text} $(date -u +'%Y%m%dT-%H%M%SZ') updated by the update script"
 
 git add .
 git diff --staged --quiet || git commit -m "$text"

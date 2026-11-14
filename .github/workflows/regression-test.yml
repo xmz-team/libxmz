@@ -71,7 +71,7 @@ jobs:
         run: |
           mkdir -p build/inc
           ln -s "$PWD" build/inc/libxmz
-          SDK="$(xcrun --sdk iphone --show-sdk-path)"
+          SDK="$(xcrun --sdk iphoneos --show-sdk-path)"
           for f in Tests/test-a.mm Tests/webapp/main.mm
           do
             echo "== $f =="

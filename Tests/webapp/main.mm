@@ -2,6 +2,8 @@
  * main.mm
  */
 
+#include <string>
+
 #include <libxmz/apple-ios-objc.hpp>
 #include <libxmz/log.hpp>
 #include <libxmz/fs.hpp>

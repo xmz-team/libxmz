@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -uo pipefail
-ROOT=$(cd $(dirname $0)/.. && pwd)/../../..
+ROOT=$(cd $(dirname $0)/.. && pwd)/../..
 WORK=$(mktemp -d)
 trap 'rm -rf "$WORK"' EXIT
 mkdir -p "$WORK/inc"
@@ -8,8 +8,15 @@ ln -s "$ROOT" "$WORK/inc/libxmz"
 
 # platform exclusive has been excluded
 HEADERS=(
-  io.hpp str.hpp time.hpp aux.hpp fs.hpp _fs.hpp
-  crash.hpp log.hpp runsh.hpp
+  io.hpp
+  str.hpp
+  time.hpp
+  aux.hpp
+  fs.hpp
+  _fs.hpp
+  crash.hpp
+  log.hpp
+  runsh.hpp
 )
 
 fail=0

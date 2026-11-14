@@ -56,10 +56,10 @@
 
 namespace xmz {
     namespace io {
-#ifndef LIBXMZ_IO_NO_AUTO_SPACE
-            inline constexpr bool no_auto_space = false;
+#if defined(LIBXMZ_IO_NO_AUTO_SPACE) && (LIBXMZ_IO_NO_AUTO_SPACE)
+        inline constexpr bool no_auto_space = true;
 #else
-            inline constexpr bool no_auto_space = true;
+        inline constexpr bool no_auto_space = false;
 #endif
         class io_error : public std::system_error {
         public:
@@ -169,7 +169,7 @@ namespace xmz {
             bool write_all(const void* buf, size_t count, int timeout_ms = DEFAULT_FLUSH_TIMEOUT_MS) {
                 if (count == 0) return true;
                 if (closed) throw io_error("File descriptor is closed");
-                if (buf == nullptr) throw io_error("Null buffer pointer");
+                if (buf == nullptr) throw io_error("null buffer pointer");
                 const char* ptr = static_cast<const char*>(buf);
                 size_t remaining = count;
                 while (remaining > 0) {
@@ -190,7 +190,7 @@ namespace xmz {
             }
 
             void write_cstr(const char* str, int timeout_ms = DEFAULT_FLUSH_TIMEOUT_MS) {
-                if (!str) throw io_error("Null string pointer");
+                if (!str) throw io_error("null string pointer");
                 write_all(str, strlen(str), timeout_ms);
             }
 
@@ -383,18 +383,16 @@ namespace xmz {
 
         template<typename T>
         void print(const T& value) {
-            if constexpr (is_string_like<T>::value) {
-                if constexpr (std::is_pointer_v<T>) { if (!value) throw io_error("Null string pointer"); }
-                write_string(1, format_value(value));
-            } else {
-                write_string(1, format_value(value));
-            }
+            if constexpr (is_string_like<T>::value && std::is_pointer_v<T>)
+                if (!value) throw io_error("null string pointer");
+            write_string(1, format_value(value));
         }
 
         template<typename T, typename... Args>
         void print(const T& first, const Args&... rest) {
             print(first);
-            if constexpr (sizeof...(rest) > 0) if constexpr (!no_auto_space) write_all(1, " ", 1);
+            if constexpr (sizeof...(rest) > 0)
+                if constexpr (!no_auto_space) write_all(1, " ", 1);
             print(rest...);
         }
 
@@ -406,19 +404,17 @@ namespace xmz {
 
         template<typename T>
         void perr(const T& value) {
-            if constexpr (is_string_like<T>::value) {
-                if constexpr (std::is_pointer_v<T>) { if (!value) throw io_error("Null string pointer"); }
-                write_string(2, format_value(value));
-            } else {
-                write_string(2, format_value(value));
-            }
+            if constexpr (is_string_like<T>::value && std::is_pointer_v<T>)
+                if (!value) throw io_error("null string pointer");
+            write_string(2, format_value(value));
         }
 
         template<typename T, typename... Args>
         void perr(const T& first, const Args&... rest) {
             perr(first);
             if constexpr (sizeof...(rest) > 0)
-                if constexpr (!no_auto_space) write_all(2, " ", 1);
+                if constexpr (!no_auto_space)
+                    write_all(2, " ", 1);
             perr(rest...);
         }
 
@@ -431,18 +427,16 @@ namespace xmz {
         template<typename T>
         void fprint(int fd, const T& value) {
             if (fd < 0) throw io_error("Invalid file descriptor");
-            if constexpr (is_string_like<T>::value) {
-                if constexpr (std::is_pointer_v<T>) { if (!value) throw io_error("Null string pointer"); }
-                write_string(fd, format_value(value));
-            } else {
-                write_string(fd, format_value(value));
-            }
+            if constexpr (is_string_like<T>::value && std::is_pointer_v<T>)
+                if (!value) throw io_error("null string pointer");
+            write_string(fd, format_value(value));
         }
 
         template<typename T, typename... Args>
         void fprint(int fd, const T& first, const Args&... rest) {
             fprint(fd, first);
-            if constexpr (sizeof...(rest) > 0) { write_all(fd, " ", 1); }
+            if constexpr (sizeof...(rest) > 0)
+                if constexpr (!no_auto_space) write_all(fd, " ", 1);
             fprint(fd, rest...);
         }
 

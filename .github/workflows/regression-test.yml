@@ -1,0 +1,74 @@
+name: Regression test CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cxx: [g++, clang++]
+        std: [c++17, c++20, c++23]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ clang
+      - name: Run regression tests
+        env:
+          CXX: ${{ matrix.cxx }}
+          CXXFLAGS: "-std=${{ matrix.std }} -Wall -Wextra -O0 -g"
+        run: bash ci/run-tests.sh
+      - name: Header self-containment
+        env:
+          CXX: ${{ matrix.cxx }}
+        run: bash ci/compile-header-check.sh
+
+  linux-strict:
+    # sparate round - Werror + C++20, simulate "strict mode"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Strict build + run
+        env:
+          CXX: g++
+          CXXFLAGS: "-std=c++20 -Wall -Wextra -Werror -O2"
+        run: bash ci/run-tests.sh
+
+  sanitizers:
+    # Memory/UB regression
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ASan + UBSan
+        env:
+          CXX: clang++
+          CXXFLAGS: "-std=c++20 -Wall -Wextra -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer"
+        run: bash ci/run-tests.sh
+
+  macos-compile:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Apple-related (syntax only)
+        run: |
+          mkdir -p build/inc
+          ln -s "$PWD" build/inc/libxmz
+          SDK="$(xcrun --sdk iphone --show-sdk-path)"
+          for f in Tests/test-a.mm Tests/webapp/main.mm
+          do
+            echo "== $f =="
+            xcrun --sdk iphone clang++ -std=c++20 \
+              -fobjc-arc -ObjC++ -fsyntax-only -isysroot "$SDK" \
+              -Ibuild/inc "$f"
+          done

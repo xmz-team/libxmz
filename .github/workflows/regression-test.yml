@@ -6,6 +6,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
+env:
+  CI_ROOT: ${{ github.workspace }}/.github/workflows/ci
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -28,11 +35,11 @@ jobs:
         env:
           CXX: ${{ matrix.cxx }}
           CXXFLAGS: "-std=${{ matrix.std }} -Wall -Wextra -O0 -g"
-        run: bash ci/run-tests.sh
+        run: bash ${{ CI_ROOT }}/run-tests.sh
       - name: Header self-containment
         env:
           CXX: ${{ matrix.cxx }}
-        run: bash ci/compile-header-check.sh
+        run: bash ${{ CI_ROOT }}/compile-header-check.sh
 
   linux-strict:
     # sparate round - Werror + C++20, simulate "strict mode"
@@ -43,7 +50,7 @@ jobs:
         env:
           CXX: g++
           CXXFLAGS: "-std=c++20 -Wall -Wextra -Werror -O2"
-        run: bash ci/run-tests.sh
+        run: bash ${{ CI_ROOT }}/run-tests.sh
 
   sanitizers:
     # Memory/UB regression
@@ -54,7 +61,7 @@ jobs:
         env:
           CXX: clang++
           CXXFLAGS: "-std=c++20 -Wall -Wextra -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer"
-        run: bash ci/run-tests.sh
+        run: bash ${{ CI_ROOT }}/run-tests.sh
 
   macos-compile:
     runs-on: macos-latest

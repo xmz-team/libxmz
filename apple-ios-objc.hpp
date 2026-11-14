@@ -88,7 +88,7 @@ namespace xmz::ios {
 		}
 		inline UIImageView* imageview(NSString* imageName) {
 			UIImage* image = [UIImage imageNamed:imageName];
-			return imageView(image);
+			return imageview(image);
 		}
 		inline auto __attribute__((deprecated))
 		imgview = [](auto&& arg) { return imageview(std::forward<decltype(arg)>(arg)); };
@@ -117,7 +117,7 @@ namespace xmz::ios {
 		inline constexpr auto& __attribute__((deprecated))
 		scrollView = scrollview;
 		// add UIStackView
-		inline UIStackView* stackView(NSArray* arrangedSubviews = nil) {
+		inline UIStackView* stackview(NSArray* arrangedSubviews = nil) {
 			UIStackView* stackView = [[UIStackView alloc] initWithArrangedSubviews:arrangedSubviews];
 			stackView.axis = UILayoutConstraintAxisVertical;
 			stackView.spacing = 10;

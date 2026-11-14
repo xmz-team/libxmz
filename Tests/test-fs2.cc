@@ -12,7 +12,7 @@ int main() {
     else
         xmz::log::error("remove 1234 failed");
     xmz::log::info("now");
-    xmz::fs::readfile("test.txt");
+    xmz::println(xmz::fs::readfile_str("test.txt"));
     if (xmz::fs::rmfile("test.txt"))
         xmz::log::info("remove file: test.txt success");
     else

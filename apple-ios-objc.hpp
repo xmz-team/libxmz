@@ -32,7 +32,7 @@ namespace xmz::ios {
 			return [NSString stringWithUTF8String:s.c_str()];
 		}
 
-		inline constexpr auto& to_nsstr = to_NSSteing;
+		inline constexpr auto& to_nsstr = to_NSString;
 		inline std::string to_string(NSString *s)
 		{
 			if (!s) return {};

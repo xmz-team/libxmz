@@ -26,19 +26,20 @@
 #import <libxmz/_apple-ios-objc.hpp>
 
 namespace xmz::ios {
-	namespace objc::ns {
+	namespace objc {
 		inline NSString *to_NSString(const std::string &s)
 		{
 			return [NSString stringWithUTF8String:s.c_str()];
 		}
 
+		inline constexpr auto& to_nsstr = to_NSSteing;
 		inline std::string to_string(NSString *s)
 		{
 			if (!s) return {};
 			const char *utf8 = [s UTF8String];
 			return utf8 ? std::string(utf8) : std::string();
 		}
-	} /* namespace objc::ns */
+	} /* namespace objc */
 	namespace objc::ui {
 		// MARK: simple application entrance
 		inline int run(int argc, char* argv[], id delegate = nil) {

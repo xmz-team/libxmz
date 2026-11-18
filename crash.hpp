@@ -51,9 +51,8 @@ inline void sig_handler(int sig) {
     char **strs = backtrace_symbols(callstack, frames);
     // determine the output target according to the configuration
     int fd = -1;
-    if (g_crash_log_path && g_crash_log_path[0] != '\0') {
+    if (g_crash_log_path && g_crash_log_path[0] != '\0')
         fd = open(g_crash_log_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
-    }
     // If you fail to open or do not have a configuration file, return directly to stderr
     int out_fd = (fd >= 0) ? fd : STDERR_FILENO;
     char buffer[256];
@@ -73,7 +72,7 @@ inline void sig_handler(int sig) {
     raise(sig);
 }
 // Initialization function, called when the program starts
-inline void init_crash_handler(const char *log_path = nullptr) {
+inline void init(const char *log_path = nullptr) {
     g_crash_log_path = log_path;
     // register common crash signals
     signal(SIGSEGV, sig_handler);
@@ -82,6 +81,8 @@ inline void init_crash_handler(const char *log_path = nullptr) {
     signal(SIGILL,  sig_handler);
     signal(SIGBUS,  sig_handler);
 }
-inline void init_crash_handler(const std::string& log_path) { return init_crash_handler(log_path.c_str()); }
+inline void init(const std::string& log_path) { return init_crash_handler(log_path.c_str()); }
+inline constexpr auto& __attribute__((deprecated))
+init_crash_handler = init;
 } /* namespace xmz::crash */
 #endif /* LIBXMZ_CRASH_HPP */

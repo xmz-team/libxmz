@@ -54,35 +54,35 @@ namespace xmz {
 
         template<typename... Args>
         inline void emerg(const Args&... args)
-		{ xmz::perrln(xmz::_log::emerg, get_time(), args...); }
+		{ xmz::perrln(xmz::log::lv::emerg, get_time(), args...); }
 
         template<typename... Args>
         inline void alert(const Args&... args)
-		{ xmz::perrln(xmz::_log::alert, get_time(), args...); }
+		{ xmz::perrln(xmz::log::lv::alert, get_time(), args...); }
 
         template<typename... Args>
         inline void crit(const Args&... args)
-		{ xmz::perrln(xmz::_log::crit, get_time(), args...); }
+		{ xmz::perrln(xmz::log::lv::crit, get_time(), args...); }
 
 		template<typename... Args>
         inline void error(const Args&... args)
-		{ xmz::perrln(xmz::_log::error, get_time(), args...); }
+		{ xmz::perrln(xmz::log::lv::error, get_time(), args...); }
 
 		template<typename... Args>
         inline void warn(const Args&... args)
-		{ xmz::perrln(xmz::_log::warn, get_time(), args...); }
+		{ xmz::perrln(xmz::log::lv::warn, get_time(), args...); }
 
 		template<typename... Args>
         inline void notice(const Args&... args)
-		{ xmz::perrln(xmz::_log::notice, get_time(), args...); }
+		{ xmz::perrln(xmz::log::lv::notice, get_time(), args...); }
 
 		template<typename... Args>
         inline void info(const Args&... args)
-		{ xmz::println(xmz::_log::info, get_time(), args...); }
+		{ xmz::println(xmz::log::lv::info, get_time(), args...); }
 
 		template<typename... Args>
         inline void debug(const Args&... args)
-		{ xmz::perrln(xmz::_log::debug, get_time(), args...); }
+		{ xmz::perrln(xmz::log::lv::debug, get_time(), args...); }
 
 		inline constexpr auto err = [](const std::string& msg) { error(msg); };
 

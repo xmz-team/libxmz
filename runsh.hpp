@@ -30,7 +30,7 @@
 namespace xmz::cmd {
 	/* execute shell but do not capture output */
 	inline int run_shell(const std::string& command,
-						 shell_type type = shell_type::sh)
+						 runsh::_::shell_type type = runsh::_::shell_type::sh)
 	{
 		if (command.empty()) return 1;
 		const char* shell_path = runsh::_::find_shell_path(type);
@@ -59,7 +59,8 @@ namespace xmz::cmd {
 	};
 	// execute shell and capture output
 	inline command_result
-	run_shell_capture(const std::string& command, shell_type type = shell_type::sh)
+	run_shell_capture(const std::string& command,
+					  runsh::_::shell_type type = runsh::_::shell_type::sh)
 	{
 		command_result result{0, "", ""};
 		int stdout_pipe[2], stderr_pipe[2];
@@ -140,16 +141,19 @@ namespace xmz::cmd {
 		int status;
 		waitpid(pid, &status, 0);
 		result.exit_code = WIFEXITED(status) ? WEXITSTATUS(status) : -1;
-		auto trim_newline = [](std::string& s) { while (!s.empty() && (s.back() == '\n' || s.back() == '\r')) { s.pop_back(); } };
+		auto trim_newline = [](std::string& s) {
+			while (!s.empty() && (s.back() == '\n' || s.back() == '\r'))
+				s.pop_back();
+		};
 		trim_newline(result.stdout_output);
 		trim_newline(result.stderr_output);
 		return result;
 	}
 
 	inline command_result runsh_capture(const std::string& command)
-	{ return run_shell_capture(command, shell_type::sh); }
+	{ return run_shell_capture(command, runsh::_::shell_type::sh); }
 	inline command_result runbash_capture(const std::string& command)
-	{ return run_shell_capture(command, shell_type::bash); }
+	{ return run_shell_capture(command, runsh::_::shell_type::bash); }
 }
 #endif /* LIBXMZ_RUNSH_HPP */
 

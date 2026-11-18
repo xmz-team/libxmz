@@ -30,8 +30,5 @@ int main() {
 ```
 this is terrible, because there will be compilation conflicts, ambiguity, and unknown behavior at runtime...  
 
-## Contact
-**email: xmz-team@outlook.com**
-
 ---
 

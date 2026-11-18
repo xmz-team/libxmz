@@ -1,12 +1,11 @@
 /*
  * crash.hpp
- * Created by XMZ <xmz-team@outlook.com> on 20/7/26
- * Copyright (c) 2026 XMZ <xmz-team@outlook.com>
+ * Copyright (c) 2026 XMZ Studio
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 3.0 of the License, or (at your option) any later version.
+ * version 3 of the License.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -18,9 +17,8 @@
  * <https://www.gnu.org/licenses/lgpl-3.0.html>.
  */
 
-#ifndef XMZ_TEAM_CRASH_HPP
-#define XMZ_TEAM_CRASH_HPP
-
+#ifndef LIBXMZ_CRASH_HPP
+#define LIBXMZ_CRASH_HPP
 #include <execinfo.h>
 #include <signal.h>
 #include <unistd.h>
@@ -86,4 +84,4 @@ inline void init_crash_handler(const char *log_path = nullptr) {
 }
 inline void init_crash_handler(const std::string& log_path) { return init_crash_handler(log_path.c_str()); }
 } /* namespace xmz::crash */
-#endif /* XMZ_TEAM_CRASH_HPP */
+#endif /* LIBXMZ_CRASH_HPP */

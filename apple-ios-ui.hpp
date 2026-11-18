@@ -1,12 +1,11 @@
 /*
  * apple-ios-objc.hpp
- * Created by XMZ <xmz-team@outlook.com> on 21/7/26
- * Copyright (c) 2026 XMZ <xmz-team@outlook.com>
+ * Copyright (c) 2026 XMZ Studio
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 3.0 of the License, or (at your option) any later version.
+ * version 3 of the License.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -18,8 +17,8 @@
  * <https://www.gnu.org/licenses/lgpl-3.0.html>.
  */
 
-#ifndef XMZ_TEAM_IOS_UI_HPP
-#define XMZ_TEAM_IOS_UI_HPP
+#ifndef LIBXMZ_IOS_UI_HPP
+#define LIBXMZ_IOS_UI_HPP
 #warning "'apple-ios-ui.hpp' has been deprecated: 'apple-ios-objc.hpp' has been included for you, but the backward compatibility of its api cannot be guaranteed."
 #include "apple-ios-objc.hpp"
-#endif /* XMZ_TEAM_IOS_UI_HPP */
+#endif /* LIBXMZ_IOS_UI_HPP */

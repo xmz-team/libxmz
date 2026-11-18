@@ -1,12 +1,11 @@
 /*
  * _fs.hpp
- * Created by XMZ <xmz-team@outlook.com> on 2026-11-11
- * Copyright (c) 2026 XMZ <xmz-team@outlook.com>
+ * Copyright (c) 2026 XMZ Studio
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 3.0 of the License, or (at your option) any later version.
+ * version 3 of the License.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -24,7 +23,6 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <libxmz/io.hpp>
 #include <sstream>
 #include <vector>
 
@@ -194,5 +192,5 @@ namespace xmz {
 		} /* namespace findtext */
 	} /* namespace fs::_ */
 } /* namespace xmz */
-#endif /* _XMZ_TEAM_FS_HPP */
+#endif /* _LIBXMZ_FS_HPP */
 

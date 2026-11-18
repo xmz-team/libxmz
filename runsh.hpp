@@ -30,11 +30,11 @@
 namespace xmz::cmd {
 	/* execute shell but do not capture output */
 	inline int run_shell(const std::string& command,
-						 runsh::_::shell_type type = runsh::_::shell_type::sh)
+						 run_shell::_::shell_type type = run_shell::_::shell_type::sh)
 	{
 		if (command.empty()) return 1;
-		const char* shell_path = runsh::_::find_shell_path(type);
-		const char* shell_name = runsh::_::get_shell_name(type);
+		const char* shell_path = run_shell::_::find_shell_path(type);
+		const char* shell_name = run_shell::_::get_shell_name(type);
 		pid_t pid = fork();
 		if (pid == -1) return -1;
 		if (pid == 0) {
@@ -48,9 +48,9 @@ namespace xmz::cmd {
 	}
 
 	inline int runsh(const std::string& command)
-	{ return runsh::_::run_shell(command, runsh::_::shell_type::sh); }
+	{ return run_shell(command, run_shell::_::shell_type::sh); }
 	inline int runbash(const std::string& command)
-	{ return runsh::_::run_shell(command, runsh::_::shell_type::bash); }
+	{ return run_shell(command, run_shell::_::shell_type::bash); }
 
 	struct command_result {
 		int exit_code;
@@ -60,7 +60,7 @@ namespace xmz::cmd {
 	// execute shell and capture output
 	inline command_result
 	run_shell_capture(const std::string& command,
-					  runsh::_::shell_type type = runsh::_::shell_type::sh)
+					  run_shell::_::shell_type type = run_shell::_::shell_type::sh)
 	{
 		command_result result{0, "", ""};
 		int stdout_pipe[2], stderr_pipe[2];
@@ -84,8 +84,8 @@ namespace xmz::cmd {
 			dup2(stderr_pipe[1], STDERR_FILENO);
 			close(stdout_pipe[1]); 
 			close(stderr_pipe[1]);
-			const char* shell_path = runsh::_::find_shell_path(type);
-			const char* shell_name = runsh::_::get_shell_name(type);
+			const char* shell_path = run_shell::_::find_shell_path(type);
+			const char* shell_name = run_shell::_::get_shell_name(type);
 			execl(shell_path, shell_name, "-c", command.c_str(), (char*)nullptr);
 			_exit(127);
 		}
@@ -151,9 +151,9 @@ namespace xmz::cmd {
 	}
 
 	inline command_result runsh_capture(const std::string& command)
-	{ return run_shell_capture(command, runsh::_::shell_type::sh); }
+	{ return run_shell_capture(command, run_shell::_::shell_type::sh); }
 	inline command_result runbash_capture(const std::string& command)
-	{ return run_shell_capture(command, runsh::_::shell_type::bash); }
+	{ return run_shell_capture(command, run_shell::_::shell_type::bash); }
 }
 #endif /* LIBXMZ_RUNSH_HPP */
 

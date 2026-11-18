@@ -30,7 +30,7 @@
 #include <algorithm>
 
 namespace xmz::cmd {
-	namespace runsh::_ {
+	namespace run_shell::_ {
 		enum class shell_type {
 			sh,
 			bash
@@ -67,5 +67,5 @@ namespace xmz::cmd {
 		inline const char* get_shell_name(shell_type type)
 		{ return (type == shell_type::bash) ? "bash" : "sh"; }
 	} /* namespace cmd::runsh::_ */
-} /* namespace xmz */
-#endif /* _LIBXMZ_RUNSH_CMD */
+} /* namespace xmz::cmd */
+#endif /* _LIBXMZ_RUNSH_HPP */

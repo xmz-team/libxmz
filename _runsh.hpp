@@ -30,7 +30,7 @@
 #include <algorithm>
 
 namespace xmz::cmd {
-	namespace run_shell::_ {
+	namespace _runsh {
 		enum class shell_type {
 			sh,
 			bash

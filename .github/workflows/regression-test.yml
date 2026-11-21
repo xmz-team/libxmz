@@ -72,7 +72,10 @@ jobs:
           mkdir -p build/inc
           ln -s "$PWD" build/inc/libxmz
           SDK="$(xcrun --sdk iphoneos --show-sdk-path)"
-          for f in Tests/test-a.mm Tests/webapp/main.mm
+          for f in Tests/test-a.mm \
+                   Tests/webapp/main.mm \
+                   Tests/fmapp/fm.hpp \
+                   Tests/fmapp/main.mm
           do
             echo "== $f =="
             xcrun --sdk iphoneos c++ -std=c++20 \

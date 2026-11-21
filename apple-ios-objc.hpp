@@ -20,6 +20,7 @@
 #ifndef LIBXMZ_IOS_APPLE_OBJC_HPP
 #define LIBXMZ_IOS_APPLE_OBJC_HPP
 #if defined(__OBJC__) && defined(__APPLE__)
+#include <string>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <libxmz/_apple-ios-objc.hpp>
